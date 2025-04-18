@@ -32,7 +32,7 @@ A Streamlit web app that uses Natural Language Processing (NLP) to summarize aca
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/student-text-summarizer.git
+git clone https://github.com/tanishMaheshwari/exc-project.git
 cd student-text-summarizer
 ```
 
@@ -110,4 +110,4 @@ Pull requests are welcome! For major changes, please open an issue first.
 
 ## 💬 Contact
 
-For suggestions or feedback, feel free to [open an issue](https://github.com/yourusername/student-text-summarizer/issues) or reach out.
+For suggestions or feedback, feel free to [open an issue](https://github.com/tanishMaheshwari/exc-project/issues) or reach out.
