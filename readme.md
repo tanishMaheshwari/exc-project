@@ -2,7 +2,7 @@
 
 A Streamlit web app that uses Natural Language Processing (NLP) to summarize academic content like lecture notes, articles, or research papers. Choose between **LSA**, **LexRank**, and **Luhn** summarization algorithms to generate concise, readable summaries in seconds.
 
-![Screenshot](assets/screenshot.png) <!-- optional: if you have a screenshot -->
+![Screenshot](assets/sc_1.png) <!-- optional: if you have a screenshot -->
 
 ---
 
