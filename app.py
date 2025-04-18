@@ -4,6 +4,8 @@ import streamlit as st
 from summarize import summarize_text
 import time
 import random
+from gtts import gTTS
+import io
 
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Student Text Summarizer", page_icon="📘", layout="centered")
@@ -79,6 +81,13 @@ if st.button("🚀 Generate Summary"):
 
             st.markdown(f"🕒 Estimated reading time: **{read_time} minute(s)**")
             st.download_button("⬇️ Download Summary", summary, file_name="summary.txt")
+            tts = gTTS(summary)
+            mp3_fp = io.BytesIO()
+            tts.write_to_fp(mp3_fp)
+            mp3_fp.seek(0)
+
+            st.audio(mp3_fp, format="audio/mp3", start_time=0)
+            st.download_button("🔊 Download Audio", mp3_fp, file_name="summary.mp3", mime="audio/mpeg")
     else:
         st.warning("⚠️ Please enter some text to summarize.")
 
