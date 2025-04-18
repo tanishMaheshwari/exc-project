@@ -1,20 +1,86 @@
-# summarize.py
+# app.py
 
-import nltk
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lsa import LsaSummarizer
+import streamlit as st
+from summarize import summarize_text
+import time
+import random
 
-nltk.download('punkt')
+# --- PAGE CONFIG ---
+st.set_page_config(page_title="Student Text Summarizer", page_icon="📘", layout="centered")
 
-def summarize_text(text, num_sentences=3):
-    parser = PlaintextParser.from_string(text, Tokenizer("english"))
-    summarizer = LsaSummarizer()
-    summary = summarizer(parser.document, num_sentences)
-    return " ".join(str(sentence) for sentence in summary)
+# --- STYLES ---
+# --- STYLES ---
+st.markdown("""
+    <style>
+        .title-text {
+            font-size: 2.3em;
+            font-weight: 600;
+            color: #66b3ff;
+        }
+        .footer {
+            text-align: center;
+            font-size: 1.5em;
+            color: gray;
+            margin-top: 50px;
+        }
+        .summary-box {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .tips-box {
+            background-color: #2a2a2a;
+            color: #dddddd;
+            padding: 10px;
+            border-left: 5px solid #66b3ff;
+            border-radius: 5px;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-# Command-line testing
-if __name__ == "__main__":
-    input_text = input("Enter the text to summarize:\n")
-    summary = summarize_text(input_text, num_sentences=3)
-    print("\n--- Summary ---\n", summary)
+
+# --- TITLE ---
+st.markdown("<div class='title-text'>📘 AI-Powered Student Text Summarizer</div>", unsafe_allow_html=True)
+st.caption("Choose between LSA, LexRank, or Luhn to summarize your academic content in seconds.")
+
+st.divider()
+
+# --- TIPS ---
+tips = [
+    "Use it for summarizing lecture notes or PDFs.",
+    "Try summarizing articles in different styles to compare results.",
+    "Combine summaries from multiple methods for better understanding.",
+    "Shorter summaries are great for revision notes!"
+]
+st.markdown(f"<div class='tips-box'>💡 Tip: {random.choice(tips)}</div>", unsafe_allow_html=True)
+st.write("")
+
+# --- TEXT INPUT ---
+col1, col2 = st.columns([3, 1])
+with col1:
+    input_text = st.text_area("✍️ Enter your content:", height=250)
+with col2:
+    method = st.selectbox("🧠 Method", ["LSA", "LexRank", "Luhn"])
+    num_sentences = st.slider("🔢 Summary Sentences", 1, 10, 3)
+
+# --- GENERATE BUTTON ---
+if st.button("🚀 Generate Summary"):
+    if input_text.strip():
+        with st.spinner(f"Generating summary using **{method}**..."):
+            time.sleep(0.5)
+            summary = summarize_text(input_text, method=method, num_sentences=num_sentences)
+
+            words = len(summary.split())
+            read_time = round(words / 200, 2)
+
+            st.markdown("### 📌 Summary:")
+            st.markdown(f"<div class='summary-box'>{summary}</div>", unsafe_allow_html=True)
+
+            st.markdown(f"🕒 Estimated reading time: **{read_time} minute(s)**")
+            st.download_button("⬇️ Download Summary", summary, file_name="summary.txt")
+    else:
+        st.warning("⚠️ Please enter some text to summarize.")
+
+# --- FOOTER ---
+st.markdown("<div class='footer'>Made By Tanish Maheshwari 22BIT0013</div>", unsafe_allow_html=True)
