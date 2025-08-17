@@ -1,5 +1,3 @@
-# app.py
-
 import streamlit as st
 from summarize import summarize_text
 import time
@@ -7,11 +5,8 @@ import random
 from gtts import gTTS
 import io
 
-# --- PAGE CONFIG ---
 st.set_page_config(page_title="Student Text Summarizer", page_icon="📘", layout="centered")
 
-# --- STYLES ---
-# --- STYLES ---
 st.markdown("""
     <style>
         .title-text {
@@ -42,13 +37,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# --- TITLE ---
 st.markdown("<div class='title-text'>📘 AI-Powered Student Text Summarizer</div>", unsafe_allow_html=True)
 st.caption("Choose between LSA, LexRank, or Luhn to summarize your academic content in seconds.")
 
 st.divider()
 
-# --- TIPS ---
 tips = [
     "Use it for summarizing lecture notes or PDFs.",
     "Try summarizing articles in different styles to compare results.",
@@ -58,7 +51,6 @@ tips = [
 st.markdown(f"<div class='tips-box'>💡 Tip: {random.choice(tips)}</div>", unsafe_allow_html=True)
 st.write("")
 
-# --- TEXT INPUT ---
 col1, col2 = st.columns([3, 1])
 with col1:
     input_text = st.text_area("✍️ Enter your content:", height=250)
@@ -66,7 +58,6 @@ with col2:
     method = st.selectbox("🧠 Method", ["LSA", "LexRank", "Luhn"])
     num_sentences = st.slider("🔢 Summary Sentences", 1, 10, 3)
 
-# --- GENERATE BUTTON ---
 if st.button("🚀 Generate Summary"):
     if input_text.strip():
         with st.spinner(f"Generating summary using **{method}**..."):
@@ -91,5 +82,4 @@ if st.button("🚀 Generate Summary"):
     else:
         st.warning("⚠️ Please enter some text to summarize.")
 
-# --- FOOTER ---
 st.markdown("<div class='footer'>Made By Tanish Maheshwari 22BIT0013</div>", unsafe_allow_html=True)
